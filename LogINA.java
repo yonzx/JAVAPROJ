@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.sql.*;
 
-public class LogINA {
-    private static final String URL = "jdbc:mysql://localhost:3306/dataLogin"; // Update with your database URL
-    private static final String USER = "root"; // Update with your MySQL username
-    private static final String PASSWORD = ""; // Update with your MySQL password
+public class proj {
+    // Update with your actual database URL, username, and password
+    private static final String URL = "jdbc:mysql://localhost:3306/users"; // Replace with your database name
+    private static final String USER = "root"; // Replace with your MySQL username
+    private static final String PASSWORD = "your_password"; // Replace with your MySQL password
 
     public static void main(String[] args) {
         Connection conn = null;
@@ -39,7 +40,7 @@ public class LogINA {
                     }
 
                     // SQL Query
-                    String sql = "SELECT * FROM TblUsers WHERE Username = ? AND Password = ?";
+                    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, userField.getText());
                     pstmt.setString(2, new String(passField.getPassword()));
@@ -112,7 +113,7 @@ public class LogINA {
         String username = JOptionPane.showInputDialog("Enter new username:");
         String password = JOptionPane.showInputDialog("Enter new password:");
 
-        String query = "INSERT INTO TblUsers (Username, Password) VALUES (?, ?)";
+        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -130,7 +131,7 @@ public class LogINA {
         String username = JOptionPane.showInputDialog("Enter username of the user to edit:");
         String newPassword = JOptionPane.showInputDialog("Enter new password:");
 
-        String query = "UPDATE TblUsers SET Password = ? WHERE Username = ?";
+        String query = "UPDATE users SET password = ? WHERE username = ?";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -149,10 +150,10 @@ public class LogINA {
         }
     }
 
-    private static void removeUser  () {
+    private static void removeUser () {
         String username = JOptionPane.showInputDialog("Enter username of the user to remove:");
 
-        String query = "DELETE FROM TblUsers WHERE Username = ?";
+        String query = "DELETE FROM users WHERE username = ?";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -170,8 +171,8 @@ public class LogINA {
         }
     }
 
-    private static void viewUsers () {
-        String query = "SELECT * FROM TblUsers";
+    private static void viewUsers() {
+        String query = "SELECT * FROM users";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
